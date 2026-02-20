@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KURIEMI AI Short Film Contest | Champagne Pink</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Zen Old Mincho -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome (Updated to 6.6.0 for x-twitter icon support) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #fffafb;
+            --text-color: #5c4b51;
+            --accent-color: #dcb8c0;
+            --border-color: #ede0e3;
+            --dark-bg: #fceeed;
+        }
+
+        html { scroll-padding-top: 80px; }
+        body {
+            /* 背景のWebGLを表示するため、body自体の背景色は透明にする */
+            background-color: transparent;
+            color: var(--text-color);
+            font-family: 'Zen Old Mincho', serif;
+            overflow-x: hidden;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9999; opacity: 0.03;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIj48ZmlsdGVyIGlkPSJnoiPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjY1IiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI2cpIiBvcGFjaXR5PSIxIi8+PC9zdmc+');
+            mix-blend-mode: multiply;
+        }
+
+        .reveal-text {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-text.active { opacity: 1; transform: translateY(0); }
+
+        .image-wrapper { overflow: hidden; position: relative; }
+        .image-wrapper img { transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1); width: 100%; height: 100%; object-fit: cover; }
+
+        .marquee-container { overflow: hidden; white-space: nowrap; padding: 2rem 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .marquee-content { display: inline-block; animation: marquee 30s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* Smooth Liquid Transition Styles */
+        .liquid-modal-content {
+            filter: url(#marbleFilter);
+            transition: filter 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Initial Entry */
+        @keyframes liquidIn {
+            0% { opacity: 0; transform: scale(0.85) translateY(40px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .liquid-enter { animation: liquidIn 1s cubic-bezier(0.19, 1, 0.22, 1) forwards; }
+        
+        .btn-primary { background-color: var(--text-color); color: var(--bg-color); border: 1px solid var(--text-color); transition: all 0.3s ease; }
+        .btn-primary:hover { background-color: transparent; color: var(--text-color); box-shadow: 0 0 15px rgba(220, 184, 192, 0.5); }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "three": "https://esm.sh/three@0.160.0"
+  }
+}
+</script>
+</head>
+<body>
+    <svg style="position: absolute; width: 0; height: 0; pointer-events: none;">
+        <defs>
+            <filter id="marbleFilter">
+                <feTurbulence type="fractalNoise" baseFrequency="0.015 0.02" numOctaves="3" seed="1" result="noise">
+                    <animate attributeName="baseFrequency" values="0.012 0.018; 0.018 0.025; 0.012 0.018" dur="10s" repeatCount="indefinite" />
+                    <animate attributeName="seed" from="1" to="100" dur="40s" repeatCount="indefinite" />
+                </feTurbulence>
+                <feDisplacementMap id="liquidDisplacement" in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
+    <div id="root"></div>
+</body>
+</html>
