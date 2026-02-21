@@ -5,10 +5,10 @@ import { useLanguage } from '../context/LanguageContext';
 export const WhatIsThis: React.FC = () => {
     const { t } = useLanguage();
     const submitLink = "https://www.creators-wonderland.com";
-    
+
     return (
         <section className="py-24 px-6 relative">
-             <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 reveal-text">
+            <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 reveal-text">
                 {/* PC版: 左側にタイトルとテキスト */}
                 <div className="w-full md:w-1/2 text-center md:text-left">
                     <h2 className="text-3xl md:text-5xl mb-8 md:mb-12 tracking-widest uppercase font-black leading-tight">
@@ -17,14 +17,17 @@ export const WhatIsThis: React.FC = () => {
                         <span className="block text-xl md:text-3xl mt-2">AI SHORT FILM CONTEST</span>
                     </h2>
                     <div className="p-8 md:p-10 bg-white/30 backdrop-blur-md rounded-xl border border-white/40 shadow-sm inline-block text-left mb-8 md:mb-12">
-                        <p 
-                          className="text-base md:text-lg font-medium leading-loose whitespace-pre-wrap"
-                          dangerouslySetInnerHTML={{ __html: t.whatIsThis.desc }}
+                        <p
+                            className="text-base md:text-lg font-medium leading-loose whitespace-pre-wrap"
+                            dangerouslySetInnerHTML={{ __html: t.whatIsThis.desc }}
                         />
                     </div>
-                    <div className="hidden md:block">
+                    <div className="hidden md:flex gap-4">
                         <a href={submitLink} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block px-12 py-4 text-lg tracking-widest uppercase shadow-xl hover:scale-105 transition-transform bg-black text-white hover:bg-accent hover:text-black">
                             {t.common.submit}
+                        </a>
+                        <a href={submitLink} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block px-12 py-4 text-lg tracking-widest uppercase shadow-xl hover:scale-105 transition-transform bg-black text-white hover:bg-accent hover:text-black">
+                            {t.common.viewMaterials}
                         </a>
                     </div>
                 </div>
@@ -32,20 +35,23 @@ export const WhatIsThis: React.FC = () => {
                 {/* PC版: 右側に9:16の動画 */}
                 <div className="w-full md:w-1/2 flex justify-center">
                     <div className="w-full max-w-[350px] md:max-w-[400px] aspect-[9/16] rounded-xl overflow-hidden shadow-2xl bg-black border border-white/20">
-                        <video 
-                          src="/public/images/contents/welcome.mp4" 
-                          autoPlay 
-                          muted 
-                          loop 
-                          playsInline 
-                          className="w-full h-full object-cover"
+                        <video
+                            src="images/contents/welcome.mp4"
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            className="w-full h-full object-cover"
                         />
                     </div>
                 </div>
 
-                <div className="mt-8 md:hidden text-center w-full">
+                <div className="mt-8 md:hidden text-center w-full flex flex-col items-center gap-4">
                     <a href={submitLink} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block px-20 py-6 text-xl tracking-widest uppercase shadow-xl hover:scale-105 transition-transform bg-black text-white hover:bg-accent hover:text-black">
                         {t.common.submit}
+                    </a>
+                    <a href={submitLink} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block px-20 py-6 text-xl tracking-widest uppercase shadow-xl hover:scale-105 transition-transform bg-black text-white hover:bg-accent hover:text-black">
+                        {t.common.viewMaterials}
                     </a>
                 </div>
             </div>
@@ -62,19 +68,19 @@ export const About: React.FC = () => {
 
                 <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     <div className="reveal-text order-2 md:order-1 flex justify-center">
-                        <a 
-                            href="https://bookplus.nikkei.com/atcl/catalog/24/02/06/01254/" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
+                        <a
+                            href="https://bookplus.nikkei.com/atcl/catalog/24/02/06/01254/"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="relative w-full max-sm aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-white/30 animate-float bg-white/10 backdrop-blur-sm transform rotate-[5deg]"
                         >
-                             <img 
-                                src="/public/images/contents/book.webp" 
-                                alt="Creators' Wonderland Book" 
+                            <img
+                                src="images/contents/book.webp"
+                                alt="Creators' Wonderland Book"
                                 className="w-full h-full object-cover"
                                 onError={(e) => { (e.target as HTMLImageElement).src = 'https://placehold.co/400x600/ede0e3/5c4b51?text=CONCEPT'; }}
-                             />
-                             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                         </a>
                     </div>
 
@@ -86,7 +92,7 @@ export const About: React.FC = () => {
                             <div className="mt-8 text-sm md:text-base font-bold text-accent tracking-widest">
                                 {t.about.author}
                             </div>
-                            
+
                             <div className="mt-12 pt-12 border-t border-white/30">
                                 <p className="text-sm md:text-base font-medium leading-loose opacity-90 whitespace-pre-wrap text-left md:text-right text-[var(--text-color)]">{t.about.conceptDesc}</p>
                             </div>
@@ -94,7 +100,7 @@ export const About: React.FC = () => {
                     </div>
                 </div>
             </div>
-            
+
             <style>{`
                 @keyframes float {
                     0% { transform: translateY(0px) rotate(5deg); }
@@ -115,9 +121,9 @@ export const Profile: React.FC = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     const images = [
-        "/public/images/kuriemi_seq/0000.webp",
-        "/public/images/kuriemi_seq/0003.webp", 
-        "/public/images/kuriemi_seq/0006.webp"
+        "images/kuriemi_seq/0000.webp",
+        "images/kuriemi_seq/0003.webp",
+        "images/kuriemi_seq/0006.webp"
     ];
 
     useEffect(() => {
@@ -128,7 +134,7 @@ export const Profile: React.FC = () => {
             const start = winH;
             const end = -rect.height;
             const progress = 1 - (rect.top - end) / (start - end);
-            
+
             let idx = 0;
             if (progress < 0.33) idx = 0;
             else if (progress < 0.66) idx = 1;
@@ -145,20 +151,20 @@ export const Profile: React.FC = () => {
     return (
         <section id="profile" ref={containerRef} className="relative py-32 md:py-48 flex items-center justify-center min-h-screen md:min-h-[120vh]">
             <div className="max-w-6xl mx-auto px-6 w-full flex flex-col md:flex-row gap-12 items-stretch">
-                
+
                 {/* PC版: 左側に9:16で表示される画像エリア */}
                 <div className="w-full md:w-1/2 aspect-[9/16] md:max-h-[80vh] relative overflow-hidden rounded-xl shadow-2xl border border-white/10 reveal-text">
                     {images.map((src, index) => (
-                        <img 
+                        <img
                             key={src}
-                            src={src} 
-                            alt="" 
-                            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}`} 
+                            src={src}
+                            alt=""
+                            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
                         />
                     ))}
                     <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
                 </div>
-                
+
                 {/* PC版: 右側にテキストエリア (タイトル上、ボックス下) */}
                 <div className="w-full md:w-1/2 flex flex-col justify-between reveal-text py-4">
                     <div className="mb-12 md:mb-0">
@@ -168,7 +174,7 @@ export const Profile: React.FC = () => {
                         <div className="w-20 h-[1px] bg-accent mb-8"></div>
                         <p className="text-xs tracking-[0.3em] text-accent uppercase mb-6 font-bold">{t.profile.role}</p>
                     </div>
-                    
+
                     <div className="bg-black/40 md:bg-white/40 backdrop-blur-md p-8 md:p-10 border border-white/20 md:border-white/40 reveal-text rounded-lg shadow-xl md:shadow-sm">
                         <p className="text-base md:text-lg leading-loose opacity-90 font-medium text-justify mb-10 whitespace-pre-wrap text-white md:text-[var(--text-color)]">
                             {t.profile.desc}
@@ -206,17 +212,17 @@ export const Judges: React.FC = () => {
     const { t } = useLanguage();
     const [selectedJudge, setSelectedJudge] = useState<any>(null);
     const [isClosing, setIsClosing] = useState(false);
-    
+
     const judgesData = [
-        { id: 1, name: t.judges.judge4Name, role: t.judges.judge4Role, img: "/public/images/contents/osamu_s.webp", desc: t.judges.judge4Desc },
-        { id: 2, name: t.judges.judge5Name, role: t.judges.judge5Role, img: "/public/images/contents/naka.webp", desc: t.judges.judge5Desc },
-        { id: 3, name: t.judges.judge2Name, role: t.judges.judge2Role, img: "/public/images/contents/kuriemi1.webp", desc: t.judges.judge2Desc },
-        { id: 4, name: t.judges.judge1Name, role: t.judges.judge1Role, img: "/public/images/contents/toya.webp", desc: t.judges.judge1Desc },
-        { id: 5, name: t.judges.judge3Name, role: t.judges.judge3Role, img: "/public/images/contents/inoue1.webp", desc: t.judges.judge3Desc },
-        { id: 6, name: t.judges.judge6Name, role: t.judges.judge6Role, img: "/public/images/contents/Yves.webp", desc: t.judges.judge6Desc },
-        { id: 7, name: t.judges.judge7Name, role: t.judges.judge7Role, img: "/public/images/contents/Matty.webp", desc: t.judges.judge7Desc },
-        { id: 8, name: t.judges.judge8Name, role: t.judges.judge8Role, img: "/public/images/contents/shirai.webp", desc: t.judges.judge8Desc },
-        { id: 9, name: t.judges.judge9Name, role: t.judges.judge9Role, img: "/public/images/contents/okamoto.webp", desc: t.judges.judge9Desc }
+        { id: 1, name: t.judges.judge4Name, role: t.judges.judge4Role, img: "images/contents/osamu_s.webp", desc: t.judges.judge4Desc },
+        { id: 2, name: t.judges.judge5Name, role: t.judges.judge5Role, img: "images/contents/naka.webp", desc: t.judges.judge5Desc },
+        { id: 3, name: t.judges.judge2Name, role: t.judges.judge2Role, img: "images/contents/kuriemi1.webp", desc: t.judges.judge2Desc },
+        { id: 4, name: t.judges.judge1Name, role: t.judges.judge1Role, img: "images/contents/toya.webp", desc: t.judges.judge1Desc },
+        { id: 5, name: t.judges.judge3Name, role: t.judges.judge3Role, img: "images/contents/inoue1.webp", desc: t.judges.judge3Desc },
+        { id: 6, name: t.judges.judge6Name, role: t.judges.judge6Role, img: "images/contents/Yves.webp", desc: t.judges.judge6Desc },
+        { id: 7, name: t.judges.judge7Name, role: t.judges.judge7Role, img: "images/contents/Matty.webp", desc: t.judges.judge7Desc },
+        { id: 8, name: t.judges.judge8Name, role: t.judges.judge8Role, img: "images/contents/shirai.webp", desc: t.judges.judge8Desc },
+        { id: 9, name: t.judges.judge9Name, role: t.judges.judge9Role, img: "images/contents/okamoto.webp", desc: t.judges.judge9Desc }
     ];
 
     useEffect(() => {
@@ -242,12 +248,12 @@ export const Judges: React.FC = () => {
 
     const handleClose = () => {
         setIsClosing(true);
-        setTimeout(() => { 
-            setSelectedJudge(null); 
-            setIsClosing(false); 
+        setTimeout(() => {
+            setSelectedJudge(null);
+            setIsClosing(false);
             const displacement = document.getElementById('liquidDisplacement') as any;
             if (displacement) displacement.setAttribute('scale', '0');
-        }, 700); 
+        }, 700);
     };
 
     return (
@@ -334,7 +340,7 @@ export const Categories: React.FC = () => {
                     <div className={cardClass}>
                         <div className={badgeClass}>01</div>
                         <div className="mb-6 overflow-hidden rounded-lg aspect-video border border-white/20">
-                            <img src="/public/images/contents/short.webp" alt="10s Challenge" className="w-full h-full object-cover" />
+                            <img src="images/contents/short.webp" alt="10s Challenge" className="w-full h-full object-cover" />
                         </div>
                         <h3 className="text-2xl md:text-4xl font-bold mb-2">{t.categories.cat1Title}</h3>
                         <p className="text-sm text-accent tracking-widest mb-6">{t.categories.cat1Subtitle}</p>
@@ -354,7 +360,7 @@ export const Categories: React.FC = () => {
                     <div className={cardClass}>
                         <div className={badgeClass}>02</div>
                         <div className="mb-6 overflow-hidden rounded-lg aspect-video border border-white/20">
-                            <img src="/public/images/contents/long.webp" alt="Short Film" className="w-full h-full object-cover" />
+                            <img src="images/contents/long.webp" alt="Short Film" className="w-full h-full object-cover" />
                         </div>
                         <h3 className="text-2xl md:text-4xl font-bold mb-2">{t.categories.cat2Title}</h3>
                         <p className="text-sm text-accent tracking-widest mb-6">{t.categories.cat2Subtitle}</p>
@@ -423,7 +429,7 @@ export const Prizes: React.FC = () => {
                         <div className="border-t border-accent/20 pt-4 mt-4"><p className="font-bold text-accent">{t.prizes.grandPrizeExtra}</p></div>
                     </div>
                     <div className="bg-white/40 p-10 border border-white/40 shadow-lg reveal-text flex flex-col justify-center backdrop-blur-md rounded-xl">
-                         <div className="text-4xl mb-6 text-accent/80"><i className="fas fa-medal"></i></div>
+                        <div className="text-4xl mb-6 text-accent/80"><i className="fas fa-medal"></i></div>
                         <h3 className="text-xl font-bold mb-2">{t.prizes.excellencePrizeTitle}</h3>
                         <p className="text-2xl font-black mb-2">{t.prizes.excellencePrizeAmount}</p>
                         <p className="text-xs opacity-60">{t.prizes.excellencePrizeNote}</p>
@@ -452,10 +458,12 @@ export const Partners: React.FC = () => {
             <div className="max-w-6xl mx-auto text-center">
                 <h2 className="text-sm tracking-[0.3em] mb-16 text-accent uppercase font-black">{t.partners.title}</h2>
                 <div className="flex flex-wrap justify-center gap-10 md:gap-20 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-                    <img src="/public/images/contents/logo_1_11.svg" className="h-12 md:h-16" alt="Partner 1" />
-                    <img src="/public/images/contents/logo_2_way.svg" className="h-12 md:h-16" alt="Partner 2" />
-                    <img src="/public/images/contents/logo_3_onoma.webp" className="h-12 md:h-16" alt="Partner 3" />
-                    <img src="/public/images/contents/logo_4_nk.svg" className="h-12 md:h-16" alt="Partner 4" />
+                    <img src="images/contents/logo_1_11.svg" className="h-12 md:h-16" alt="Partner 1" />
+                    <img src="images/contents/logo_2_way.svg" className="h-12 md:h-16" alt="Partner 2" />
+                    <img src="images/contents/logo_3_onoma.webp" className="h-12 md:h-16" alt="Partner 3" />
+                    <img src="images/contents/logo_4_nk.svg" className="h-12 md:h-16" alt="Partner 4" />
+                    <img src="images/contents/logo5_aihub.webp" className="h-12 md:h-16" alt="AiHUB" />
+                    <img src="images/contents/logo6_ai.webp" className="h-12 md:h-16" alt="AI" />
                 </div>
             </div>
         </section>
@@ -465,7 +473,7 @@ export const Partners: React.FC = () => {
 export const CallToAction: React.FC = () => {
     const { t } = useLanguage();
     const submitLink = "https://www.creators-wonderland.com";
-    
+
     return (
         <section id="cta" className="py-24 px-6 bg-accent/5">
             <div className="max-w-4xl mx-auto text-center reveal-text">
@@ -562,21 +570,27 @@ export const FAQ: React.FC = () => {
 };
 
 interface FooterProps {
-  onTermsClick?: () => void;
-  onPrivacyClick?: () => void;
+    onTermsClick?: () => void;
+    onPrivacyClick?: () => void;
+    onGuideClick?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onTermsClick, onPrivacyClick }) => {
+export const Footer: React.FC<FooterProps> = ({ onTermsClick, onPrivacyClick, onGuideClick }) => {
     const { t } = useLanguage();
-    
+
     const handleTerms = (e: React.MouseEvent) => {
-      e.preventDefault();
-      if (onTermsClick) onTermsClick();
+        e.preventDefault();
+        if (onTermsClick) onTermsClick();
     };
 
     const handlePrivacy = (e: React.MouseEvent) => {
-      e.preventDefault();
-      if (onPrivacyClick) onPrivacyClick();
+        e.preventDefault();
+        if (onPrivacyClick) onPrivacyClick();
+    };
+
+    const handleGuide = (e: React.MouseEvent) => {
+        e.preventDefault();
+        if (onGuideClick) onGuideClick();
     };
 
     return (
@@ -595,8 +609,8 @@ export const Footer: React.FC<FooterProps> = ({ onTermsClick, onPrivacyClick }) 
                 <div className="flex flex-wrap justify-center gap-8 mb-8 font-medium opacity-80">
                     <a href="#" onClick={handleTerms} className="hover:text-accent transition-colors">{t.footer.links.terms}</a>
                     <a href="#" onClick={handlePrivacy} className="hover:text-accent transition-colors">{t.footer.links.privacy}</a>
-                    <a href="#" className="hover:text-accent transition-colors">{t.footer.links.guide}</a>
-                    <a href="#" className="hover:text-accent transition-colors">{t.footer.links.contact}</a>
+                    <a href="#" onClick={handleGuide} className="hover:text-accent transition-colors">{t.footer.links.guide}</a>
+                    <a href="https://aihub.co.jp/contact" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">{t.footer.links.contact}</a>
                 </div>
                 <div className="text-2xl font-bold tracking-widest mb-4 uppercase">KURIEMI AI SHORT FILM CONTEST</div>
             </div>
