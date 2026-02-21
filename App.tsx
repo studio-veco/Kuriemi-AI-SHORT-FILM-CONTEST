@@ -35,16 +35,30 @@ const AppContent: React.FC = () => {
   const { t } = useLanguage();
 
   const partnerLogos = [
-    '/public/images/contents/logo_1_11.svg',
-    '/public/images/contents/logo_2_way.svg',
-    '/public/images/contents/logo_3_onoma.webp',
-    '/public/images/contents/logo_4_nk.svg'
+    'images/contents/logo_1_11.svg',
+    'images/contents/logo_2_way.svg',
+    'images/contents/logo_3_onoma.webp',
+    'images/contents/logo_4_nk.svg',
+    'images/contents/logo5_aihub.webp',
+    'images/contents/logo6_ai.webp'
+
   ];
 
   // Page view navigation helper
   const navigateTo = (newView: PageView) => {
-    setView(newView);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // 利用規約などのページからトップに戻るときはLoadingを挟む
+    if (newView === 'home' && (view === 'terms' || view === 'privacy')) {
+      setLoading(true);
+      setView(newView);
+      window.scrollTo({ top: 0 });
+      // 1.5秒後にローダーを解除
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
+    } else {
+      setView(newView);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   useEffect(() => {
@@ -116,16 +130,12 @@ const AppContent: React.FC = () => {
             <About />
             <WhatIsThis />
             <Profile />
-            {/* ハッシュタグ帯: テキスト色を白に修正 */}
             <Marquee className="bg-[#f8d7da] py-2" text={t.marquee.text} />
             
-            {/* 並び替えセクション */}
             <Categories />
             <Prizes />
             <Inspiration />
             <EntryProcess />
-            
-            {/* 以降元のまま */}
             <Schedule />
             <Judges />
             <Partners />
