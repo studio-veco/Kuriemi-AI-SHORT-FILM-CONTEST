@@ -39,9 +39,10 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ loading }) => {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [centerStepIndex, setCenterStepIndex] = useState(0);
+  const [showMainText, setShowMainText] = useState(true);
   const mountRef = useRef<HTMLDivElement>(null);
   const targetRotationRef = useRef(0);
   const ringGroupRef = useRef<THREE.Group | null>(null);
@@ -63,6 +64,14 @@ const Hero: React.FC<HeroProps> = ({ loading }) => {
     const interval = setInterval(() => {
       setCenterStepIndex((prev) => (prev + 1) % centerSequence.length);
     }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Toggle main text visibility every 10 seconds for mobile (PC remains visible via Tailwind class)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowMainText((prev) => !prev);
+    }, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -289,6 +298,15 @@ const Hero: React.FC<HeroProps> = ({ loading }) => {
 
   }, [centerStepIndex, loading]);
 
+  const submitLink = "https://www.creators-wonderland.com";
+
+  // 言語に応じた募集期間テキストの取得
+  const getPeriodText = () => {
+    if (locale === 'ja') return "募集期間 2026年2月24日～3月31日まで";
+    if (locale === 'zh') return "投稿期間 2026年2月24日～3月31日";
+    return "Entry Period: Feb 24 - Mar 31, 2026";
+  };
+
   return (
     <>
     <header className="relative h-screen w-full overflow-hidden">
@@ -307,7 +325,11 @@ const Hero: React.FC<HeroProps> = ({ loading }) => {
         
         {/* Content Area */}
         <div className="relative z-30 h-full w-full md:w-1/2 md:ml-auto flex flex-col pt-32 md:pt-0 px-6 md:pr-16 pointer-events-none md:items-end md:justify-center">
-            <div className="w-full md:w-auto md:text-right pointer-events-auto">
+            {/* 
+                PC版 (md 以上) では opacity-100 !important 的な挙動にするため md:opacity-100 を付与。
+                モバイルでは showMainText の状態に応じて 10秒ごとに opacity-0 と opacity-100 が切り替わる。
+            */}
+            <div className={`w-full md:w-auto md:text-right pointer-events-auto transition-opacity duration-[2000ms] ${showMainText ? 'opacity-100' : 'opacity-0 md:opacity-100'}`}>
                 <div className="text-center md:text-right">
                     <p className="text-white text-xs md:text-lg tracking-[0.8em] mb-4 reveal-text delay-200 uppercase font-black drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
                          {t.hero.catchphrase}
@@ -316,26 +338,40 @@ const Hero: React.FC<HeroProps> = ({ loading }) => {
                         <span className="block text-5xl md:text-8xl lg:text-[9rem] tracking-tighter">KURIEMI</span>
                         <span className="block text-2xl md:text-5xl italic font-serif text-accent mt-2 opacity-100">{t.hero.expansion}</span>
                     </h1>
-                    <p className="text-sm md:text-lg font-bold tracking-[0.2em] uppercase text-white mb-6 reveal-text delay-400 drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
+                    <p className="text-sm md:text-lg font-bold tracking-[0.2em] uppercase text-white mb-2 reveal-text delay-400 drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
                         {t.hero.project}
                     </p>
-                    {/* スマホのみ中央寄せに修正 */}
+                    
+                    {/* 募集期間の表示を追加 - 視認性向上のため色を薄ピンク(#f8d7da)に変更 */}
+                    <div className="mb-6 reveal-text delay-450 drop-shadow-[0_2px_10px_rgba(0,0,0,1)]">
+                        <p className="text-[#f8d7da] text-sm md:text-xl font-black tracking-widest inline-block bg-black/60 px-4 py-2 rounded-lg border border-[#f8d7da]/20">
+                            {getPeriodText()}
+                        </p>
+                    </div>
+
                     <p className="text-[clamp(1.1rem,4.5vw,2.25rem)] md:text-4xl font-bold tracking-[0.05em] leading-tight reveal-text delay-500 text-white drop-shadow-[0_4px_20px_rgba(0,0,0,1)] max-w-full md:max-w-xl md:ml-auto whitespace-pre opacity-100 bg-black/30 md:bg-transparent p-4 md:p-0 overflow-hidden text-center md:text-right">
                         {t.hero.description}
                     </p>
                 </div>
                 
-                {/* Actions - スマホで横幅を縮小し中央寄せ */}
-                <div className="mt-8 md:mt-12 flex flex-col md:flex-row gap-4 md:justify-end reveal-text delay-700">
-                    <a href="#" className="w-fit min-w-[160px] mx-auto md:mr-0 px-6 py-4 bg-black border-2 border-accent text-white text-xs md:text-base tracking-widest font-black uppercase hover:bg-accent hover:text-black transition-all shadow-[0_0_30px_rgba(220,184,192,0.4)] text-center scale-100">
+                {/* Actions - Desktop Only inside this div */}
+                <div className="hidden md:flex mt-12 flex-row justify-end reveal-text delay-700">
+                    <a href={submitLink} target="_blank" rel="noopener noreferrer" className="w-fit min-w-[160px] px-6 py-4 bg-black border-2 border-accent text-white text-xs md:text-base tracking-widest font-black uppercase hover:bg-accent hover:text-black transition-all shadow-[0_0_30px_rgba(220,184,192,0.4)] text-center scale-100">
                         {t.common.submit}
                     </a>
                 </div>
             </div>
         </div>
 
-        {/* Bottom Scroll Indicator */}
-        <div className="absolute bottom-10 left-0 w-full z-40 flex justify-center pointer-events-none drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+        {/* Bottom Area - Mobile Button and Scroll Indicator */}
+        <div className="absolute bottom-10 left-0 w-full z-40 flex flex-col items-center pointer-events-none drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+            {/* Mobile Submit Button - positioned directly above the scroll text */}
+            <div className="md:hidden mb-12 pointer-events-auto reveal-text delay-700">
+                <a href={submitLink} target="_blank" rel="noopener noreferrer" className="px-10 py-4 bg-black border-2 border-accent text-white text-base tracking-widest font-black uppercase hover:bg-accent hover:text-black transition-all shadow-[0_0_30px_rgba(220,184,192,0.6)] text-center">
+                    {t.common.submit}
+                </a>
+            </div>
+            
             <div className="flex flex-col items-center gap-4 text-white reveal-text delay-1000">
                 <span className="text-[10px] tracking-[0.4em] uppercase font-bold">{t.hero.scroll}</span>
                 <div className="w-[1px] h-12 bg-gradient-to-b from-white to-transparent"></div>

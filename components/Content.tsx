@@ -4,30 +4,47 @@ import { useLanguage } from '../context/LanguageContext';
 
 export const WhatIsThis: React.FC = () => {
     const { t } = useLanguage();
+    const submitLink = "https://www.creators-wonderland.com";
+    
     return (
         <section className="py-24 px-6 relative">
-             <div className="max-w-4xl mx-auto text-center reveal-text">
-                <h2 className="text-3xl md:text-5xl mb-12 tracking-widest uppercase">{t.whatIsThis.title}</h2>
-                <div className="p-8 md:p-12 bg-white/30 backdrop-blur-md rounded-xl border border-white/40 shadow-sm inline-block mb-12 text-left">
-                    <p 
-                      className="text-base md:text-lg font-medium leading-loose whitespace-pre-wrap"
-                      dangerouslySetInnerHTML={{ __html: t.whatIsThis.desc }}
-                    />
+             <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 reveal-text">
+                {/* PC版: 左側にタイトルとテキスト */}
+                <div className="w-full md:w-1/2 text-center md:text-left">
+                    <h2 className="text-3xl md:text-5xl mb-8 md:mb-12 tracking-widest uppercase font-black leading-tight">
+                        <span className="block">About</span>
+                        <span className="block text-accent">KURIEMI</span>
+                        <span className="block text-xl md:text-3xl mt-2">AI SHORT FILM CONTEST</span>
+                    </h2>
+                    <div className="p-8 md:p-10 bg-white/30 backdrop-blur-md rounded-xl border border-white/40 shadow-sm inline-block text-left mb-8 md:mb-12">
+                        <p 
+                          className="text-base md:text-lg font-medium leading-loose whitespace-pre-wrap"
+                          dangerouslySetInnerHTML={{ __html: t.whatIsThis.desc }}
+                        />
+                    </div>
+                    <div className="hidden md:block">
+                        <a href={submitLink} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block px-12 py-4 text-lg tracking-widest uppercase shadow-xl hover:scale-105 transition-transform bg-black text-white hover:bg-accent hover:text-black">
+                            {t.common.submit}
+                        </a>
+                    </div>
                 </div>
 
-                <div className="w-full aspect-video rounded-xl overflow-hidden shadow-2xl mb-16 bg-black border border-white/20">
-                    <iframe 
-                      className="w-full h-full"
-                      src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                      title="KURIEMI AI SHORT FILM CONTEST Teaser"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
+                {/* PC版: 右側に9:16の動画 */}
+                <div className="w-full md:w-1/2 flex justify-center">
+                    <div className="w-full max-w-[350px] md:max-w-[400px] aspect-[9/16] rounded-xl overflow-hidden shadow-2xl bg-black border border-white/20">
+                        <video 
+                          src="/public/images/contents/welcome.mp4" 
+                          autoPlay 
+                          muted 
+                          loop 
+                          playsInline 
+                          className="w-full h-full object-cover"
+                        />
+                    </div>
                 </div>
 
-                <div className="mt-8">
-                    <a href="#" className="btn-primary inline-block px-20 py-6 text-xl tracking-widest uppercase shadow-xl hover:scale-105 transition-transform bg-black text-white hover:bg-accent hover:text-black">
+                <div className="mt-8 md:hidden text-center w-full">
+                    <a href={submitLink} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block px-20 py-6 text-xl tracking-widest uppercase shadow-xl hover:scale-105 transition-transform bg-black text-white hover:bg-accent hover:text-black">
                         {t.common.submit}
                     </a>
                 </div>
@@ -49,7 +66,7 @@ export const About: React.FC = () => {
                             href="https://bookplus.nikkei.com/atcl/catalog/24/02/06/01254/" 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="relative w-full max-w-sm aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-white/30 animate-float bg-white/10 backdrop-blur-sm transform rotate-[5deg]"
+                            className="relative w-full max-sm aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-white/30 animate-float bg-white/10 backdrop-blur-sm transform rotate-[5deg]"
                         >
                              <img 
                                 src="/public/images/contents/book.webp" 
@@ -126,50 +143,55 @@ export const Profile: React.FC = () => {
     }, []);
 
     return (
-        <section id="profile" ref={containerRef} className="relative text-white overflow-hidden py-32 flex items-center justify-center min-h-[150vh]">
-             <div className="absolute inset-0 w-full h-full">
-                {images.map((src, index) => (
-                    <img 
-                        key={src}
-                        src={src} 
-                        alt="" 
-                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${index === currentImageIndex ? 'opacity-70' : 'opacity-0'}`} 
-                    />
-                ))}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80"></div>
-            </div>
-
-            <div className="relative z-10 max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div className="reveal-text">
-                    <h2 className="text-5xl md:text-8xl font-thin mb-8 tracking-tighter leading-none">
-                        WHO IS<br /><span className="text-accent italic font-serif">KURIEMI?</span>
-                    </h2>
-                    <div className="w-20 h-[1px] bg-accent mb-8"></div>
-                    <p className="text-xs tracking-[0.3em] text-accent uppercase mb-6">{t.profile.role}</p>
+        <section id="profile" ref={containerRef} className="relative py-32 md:py-48 flex items-center justify-center min-h-screen md:min-h-[120vh]">
+            <div className="max-w-6xl mx-auto px-6 w-full flex flex-col md:flex-row gap-12 items-stretch">
+                
+                {/* PC版: 左側に9:16で表示される画像エリア */}
+                <div className="w-full md:w-1/2 aspect-[9/16] md:max-h-[80vh] relative overflow-hidden rounded-xl shadow-2xl border border-white/10 reveal-text">
+                    {images.map((src, index) => (
+                        <img 
+                            key={src}
+                            src={src} 
+                            alt="" 
+                            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}`} 
+                        />
+                    ))}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
                 </div>
                 
-                <div className="bg-black/40 backdrop-blur-md p-8 md:p-12 border border-white/10 reveal-text rounded-lg">
-                    <p className="text-base md:text-lg leading-loose opacity-90 font-light text-justify mb-10 whitespace-pre-wrap">
-                        {t.profile.desc}
-                    </p>
-                    <div className="grid grid-cols-2 gap-8 text-xs opacity-60 font-mono pt-8 border-t border-white/20">
-                        <div>
-                            <span className="block text-accent mb-2 uppercase">Role</span>
-                            {t.profile.job}
-                        </div>
-                        <div>
-                            <span className="block text-accent mb-2 uppercase">Links</span>
-                            <div className="flex flex-col gap-3 mt-1">
-                                <a href="https://pinyo.jp/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors border-b border-white/30 pb-0.5 inline-block">
-                                    Official Website
-                                </a>
-                                <div className="flex gap-4 mt-1 text-lg">
-                                    <a href="https://x.com/kurita__emi?lang=ja" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="X (Twitter)">
-                                        <i className="fab fa-x-twitter"></i>
+                {/* PC版: 右側にテキストエリア (タイトル上、ボックス下) */}
+                <div className="w-full md:w-1/2 flex flex-col justify-between reveal-text py-4">
+                    <div className="mb-12 md:mb-0">
+                        <h2 className="text-5xl md:text-8xl font-thin mb-8 tracking-tighter leading-none text-white md:text-[var(--text-color)]">
+                            WHO IS<br /><span className="text-accent italic font-serif">KURIEMI?</span>
+                        </h2>
+                        <div className="w-20 h-[1px] bg-accent mb-8"></div>
+                        <p className="text-xs tracking-[0.3em] text-accent uppercase mb-6 font-bold">{t.profile.role}</p>
+                    </div>
+                    
+                    <div className="bg-black/40 md:bg-white/40 backdrop-blur-md p-8 md:p-10 border border-white/20 md:border-white/40 reveal-text rounded-lg shadow-xl md:shadow-sm">
+                        <p className="text-base md:text-lg leading-loose opacity-90 font-medium text-justify mb-10 whitespace-pre-wrap text-white md:text-[var(--text-color)]">
+                            {t.profile.desc}
+                        </p>
+                        <div className="grid grid-cols-2 gap-8 text-xs opacity-60 font-mono pt-8 border-t border-white/20 md:border-[var(--text-color)]/20 text-white md:text-[var(--text-color)]">
+                            <div>
+                                <span className="block text-accent mb-2 uppercase font-bold">Role</span>
+                                {t.profile.job}
+                            </div>
+                            <div>
+                                <span className="block text-accent mb-2 uppercase font-bold">Links</span>
+                                <div className="flex flex-col gap-3 mt-1">
+                                    <a href="https://pinyo.jp/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors border-b border-white/30 md:border-[var(--text-color)]/30 pb-0.5 inline-block">
+                                        Official Website
                                     </a>
-                                    <a href="https://www.instagram.com/kurita__emi/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="Instagram">
-                                        <i className="fab fa-instagram"></i>
-                                    </a>
+                                    <div className="flex gap-4 mt-1 text-lg">
+                                        <a href="https://x.com/kurita__emi?lang=ja" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="X (Twitter)">
+                                            <i className="fab fa-x-twitter"></i>
+                                        </a>
+                                        <a href="https://www.instagram.com/kurita__emi/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="Instagram">
+                                            <i className="fab fa-instagram"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -442,12 +464,14 @@ export const Partners: React.FC = () => {
 
 export const CallToAction: React.FC = () => {
     const { t } = useLanguage();
+    const submitLink = "https://www.creators-wonderland.com";
+    
     return (
         <section id="cta" className="py-24 px-6 bg-accent/5">
             <div className="max-w-4xl mx-auto text-center reveal-text">
                 <h2 className="text-3xl md:text-5xl mb-8 tracking-widest uppercase">{t.cta.title}</h2>
                 <div className="mt-12">
-                    <a href="#" className="btn-primary inline-block px-20 py-6 text-xl tracking-widest uppercase shadow-xl hover:scale-105 transition-transform bg-black text-white hover:bg-accent hover:text-black">
+                    <a href={submitLink} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block px-20 py-6 text-xl tracking-widest uppercase shadow-xl hover:scale-105 transition-transform bg-black text-white hover:bg-accent hover:text-black">
                         {t.cta.btn}
                     </a>
                     <p className="mt-4 text-xs opacity-60 uppercase tracking-widest">{t.cta.note}</p>
