@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kuriemi-ai-contest.com/sitemap.xml
