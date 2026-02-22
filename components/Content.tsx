@@ -28,7 +28,7 @@ export const WhatIsThis: React.FC = () => {
     }, []);
 
     return (
-        <section className="py-24 px-6 relative">
+        <section id="what-is-this" className="py-24 px-6 relative">
             <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 reveal-text">
                 {/* PC版: 左側にタイトルとテキスト */}
                 <div className="w-full md:w-1/2 text-center md:text-left">
