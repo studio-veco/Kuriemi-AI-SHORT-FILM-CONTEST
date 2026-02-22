@@ -1,10 +1,31 @@
-
 import React, { useState, useEffect, useRef } from 'react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../context/LanguageContext.tsx';
 
 export const WhatIsThis: React.FC = () => {
     const { t } = useLanguage();
     const submitLink = "https://www.creators-wonderland.com";
+    
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    // ▼ ここを大改修しました（Safariに無理やり言うことを聞かせるコード）
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        // React任せにせず、JSから直接DOMに「ミュートとインライン再生」を叩き込む
+        video.muted = true;
+        video.defaultMuted = true;
+        video.setAttribute('playsinline', 'true');
+        video.setAttribute('webkit-playsinline', 'true'); // 古いiPhone用
+
+        // その上で再生を強制スタート
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log("iOS Safariの制限により自動再生がブロックされました:", error);
+            });
+        }
+    }, []);
 
     return (
         <section className="py-24 px-6 relative">
@@ -32,15 +53,17 @@ export const WhatIsThis: React.FC = () => {
                     </div>
                 </div>
 
-                {/* PC版: 右側に9:16の動画 */}
+                {/* PC/スマホ共通: 右側に9:16の動画 */}
                 <div className="w-full md:w-1/2 flex justify-center">
                     <div className="w-full max-w-[350px] md:max-w-[400px] aspect-[9/16] rounded-xl overflow-hidden shadow-2xl bg-black border border-white/20">
                         <video
-                            src="images/contents/welcome.mp4"
+                            ref={videoRef}
+                            src="https://res.cloudinary.com/dmroxtsmi/video/upload/v1771756664/Welcome_xpngfq.mp4"
                             autoPlay
-                            muted
                             loop
+                            muted
                             playsInline
+                            poster="/images/contents/short.webp"
                             className="w-full h-full object-cover"
                         />
                     </div>
@@ -295,7 +318,7 @@ export const Judges: React.FC = () => {
 
 export const Inspiration: React.FC = () => {
     const { t } = useLanguage();
-    const samples = [{ id: 'yGE-zrMLMhA' }, { id: 'ND-3sWFl10k' }];
+    const samples = [{ id: 'q90eWVudRmQ' },{ id: 'Yc-UrPaKC_c' },{ id: 'DlMaINqQ_JU' }, { id: 'ND-3sWFl10k' }];
     return (
         <section id="inspiration" className="py-24 md:py-32 px-6">
             <div className="max-w-7xl mx-auto">
