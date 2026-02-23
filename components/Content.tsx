@@ -3,22 +3,19 @@ import { useLanguage } from '../context/LanguageContext.tsx';
 
 export const WhatIsThis: React.FC = () => {
     const { t } = useLanguage();
-    const submitLink = "https://www.creators-wonderland.com";
+    const submitLink = "https://www.creators-wonderland.com/ja/contests/kuriemi-contest001";
     
     const videoRef = useRef<HTMLVideoElement>(null);
 
-    // ▼ ここを大改修しました（Safariに無理やり言うことを聞かせるコード）
     useEffect(() => {
         const video = videoRef.current;
         if (!video) return;
 
-        // React任せにせず、JSから直接DOMに「ミュートとインライン再生」を叩き込む
         video.muted = true;
         video.defaultMuted = true;
         video.setAttribute('playsinline', 'true');
-        video.setAttribute('webkit-playsinline', 'true'); // 古いiPhone用
+        video.setAttribute('webkit-playsinline', 'true');
 
-        // その上で再生を強制スタート
         const playPromise = video.play();
         if (playPromise !== undefined) {
             playPromise.catch(error => {
@@ -30,7 +27,6 @@ export const WhatIsThis: React.FC = () => {
     return (
         <section id="what-is-this" className="py-24 px-6 relative">
             <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 reveal-text">
-                {/* PC版: 左側にタイトルとテキスト */}
                 <div className="w-full md:w-1/2 text-center md:text-left">
                     <h2 className="text-3xl md:text-5xl mb-8 md:mb-12 tracking-widest uppercase font-black leading-tight">
                         <span className="block">About</span>
@@ -53,7 +49,6 @@ export const WhatIsThis: React.FC = () => {
                     </div>
                 </div>
 
-                {/* PC/スマホ共通: 右側に9:16の動画 */}
                 <div className="w-full md:w-1/2 flex justify-center">
                     <div className="w-full max-w-[350px] md:max-w-[400px] aspect-[9/16] rounded-xl overflow-hidden shadow-2xl bg-black border border-white/20">
                         <video
@@ -96,6 +91,7 @@ export const About: React.FC = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="relative w-full max-sm aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-white/30 animate-float bg-white/10 backdrop-blur-sm transform rotate-[5deg]"
+                            style={{ scale: '0.8' }}
                         >
                             <img
                                 src="images/contents/book.webp"
@@ -107,17 +103,17 @@ export const About: React.FC = () => {
                         </a>
                     </div>
 
-                    <div className="flex flex-col items-center md:items-end text-center md:text-right order-1 md:order-2">
+                    <div className="flex flex-col items-center md:items-end text-left order-1 md:order-2">
                         <div className="relative p-8 md:p-12 w-full reveal-text backdrop-blur-sm bg-white/20 rounded-xl shadow-sm border border-white/30">
-                            <p className="text-lg md:text-2xl font-serif font-medium leading-loose md:leading-loose whitespace-pre-wrap text-[var(--text-color)]">
+                            <p className="text-lg md:text-2xl font-serif font-medium leading-loose md:leading-loose whitespace-pre-wrap text-[var(--text-color)] text-left">
                                 {t.about.quote}
                             </p>
-                            <div className="mt-8 text-sm md:text-base font-bold text-accent tracking-widest">
+                            <div className="mt-8 text-sm md:text-base font-bold text-accent tracking-widest text-right">
                                 {t.about.author}
                             </div>
 
                             <div className="mt-12 pt-12 border-t border-white/30">
-                                <p className="text-sm md:text-base font-medium leading-loose opacity-90 whitespace-pre-wrap text-left md:text-right text-[var(--text-color)]">{t.about.conceptDesc}</p>
+                                <p className="text-sm md:text-base font-medium leading-loose opacity-90 whitespace-pre-wrap text-left text-[var(--text-color)]">{t.about.conceptDesc}</p>
                             </div>
                         </div>
                     </div>
@@ -174,8 +170,6 @@ export const Profile: React.FC = () => {
     return (
         <section id="profile" ref={containerRef} className="relative py-32 md:py-48 flex items-center justify-center min-h-screen md:min-h-[120vh]">
             <div className="max-w-6xl mx-auto px-6 w-full flex flex-col md:flex-row gap-12 items-stretch">
-
-                {/* PC版: 左側に9:16で表示される画像エリア */}
                 <div className="w-full md:w-1/2 aspect-[9/16] md:max-h-[80vh] relative overflow-hidden rounded-xl shadow-2xl border border-white/10 reveal-text">
                     {images.map((src, index) => (
                         <img
@@ -188,7 +182,6 @@ export const Profile: React.FC = () => {
                     <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
                 </div>
 
-                {/* PC版: 右側にテキストエリア (タイトル上、ボックス下) */}
                 <div className="w-full md:w-1/2 flex flex-col justify-between reveal-text py-4">
                     <div className="mb-12 md:mb-0">
                         <h2 className="text-5xl md:text-8xl font-thin mb-8 tracking-tighter leading-none text-white md:text-[var(--text-color)]">
@@ -245,7 +238,8 @@ export const Judges: React.FC = () => {
         { id: 6, name: t.judges.judge6Name, role: t.judges.judge6Role, img: "images/contents/Yves.webp", desc: t.judges.judge6Desc },
         { id: 7, name: t.judges.judge7Name, role: t.judges.judge7Role, img: "images/contents/Matty.webp", desc: t.judges.judge7Desc },
         { id: 8, name: t.judges.judge8Name, role: t.judges.judge8Role, img: "images/contents/shirai.webp", desc: t.judges.judge8Desc },
-        { id: 9, name: t.judges.judge9Name, role: t.judges.judge9Role, img: "images/contents/okamoto.webp", desc: t.judges.judge9Desc }
+        { id: 9, name: t.judges.judge9Name, role: t.judges.judge9Role, img: "images/contents/okamoto.webp", desc: t.judges.judge9Desc },
+        { id: 10, name: t.judges.judge10Name, role: t.judges.judge10Role, img: "https://placehold.co/300x400/ede0e3/5c4b51?text=Yachimat", desc: t.judges.judge10Desc }
     ];
 
     useEffect(() => {
@@ -283,9 +277,9 @@ export const Judges: React.FC = () => {
         <section id="judges" className="py-24 md:py-32 px-6 relative">
             <div className="max-w-6xl mx-auto">
                 <h2 className="text-3xl md:text-5xl mb-24 text-center reveal-text tracking-widest uppercase">{t.judges.title}</h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-16">
+                <div className="flex flex-wrap justify-center gap-x-8 gap-y-16">
                     {judgesData.map((judge) => (
-                        <div key={judge.id} className="text-center reveal-text cursor-pointer group" onClick={() => setSelectedJudge(judge)}>
+                        <div key={judge.id} className="w-[calc(50%-16px)] md:w-[calc(33.33%-22px)] text-center reveal-text cursor-pointer group" onClick={() => setSelectedJudge(judge)}>
                             <div className="aspect-[3/4] overflow-hidden mb-6 border border-white/50 bg-white/30 relative shadow-md backdrop-blur-sm rounded-lg transition-transform duration-300 hover:-translate-y-2">
                                 <img src={judge.img} alt={judge.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onError={(e) => { (e.target as HTMLImageElement).src = 'https://placehold.co/300x400/ede0e3/5c4b51?text=JUDGE'; }} />
                             </div>
@@ -318,7 +312,7 @@ export const Judges: React.FC = () => {
 
 export const Inspiration: React.FC = () => {
     const { t } = useLanguage();
-    const samples = [{ id: 'q90eWVudRmQ' },{ id: 'Yc-UrPaKC_c' },{ id: 'DlMaINqQ_JU' }, { id: 'ND-3sWFl10k' }];
+    const samples = [{ id: 'q90eWVudRmQ' },{ id: 'Yc-UrPaKC_c' },{ id: '7LOpIMrOzMc' }, { id: 'um7uVy70OxI' }, { id: 'DlMaINqQ_JU' }];
     return (
         <section id="inspiration" className="py-24 md:py-32 px-6">
             <div className="max-w-7xl mx-auto">
@@ -334,7 +328,7 @@ export const Inspiration: React.FC = () => {
                     ))}
                 </div>
                 <div className="text-center mt-12 md:mt-16 reveal-text">
-                    <a href="#" className="inline-block border-b border-[var(--text-color)] pb-1 hover:text-accent hover:border-accent transition-colors">{t.inspiration.moreBtn}</a>
+                    <a href="https://www.creators-wonderland.com/" target="_blank" rel="noopener noreferrer" className="inline-block border-b border-[var(--text-color)] pb-1 hover:text-accent hover:border-accent transition-colors">{t.inspiration.moreBtn}</a>
                 </div>
             </div>
         </section>
@@ -367,7 +361,7 @@ export const Categories: React.FC = () => {
                         </div>
                         <h3 className="text-2xl md:text-4xl font-bold mb-2">{t.categories.cat1Title}</h3>
                         <p className="text-sm text-accent tracking-widest mb-6">{t.categories.cat1Subtitle}</p>
-                        <p className="text-base leading-loose mb-8 opacity-80">{t.categories.cat1Desc}</p>
+                        <p className="text-base leading-loose mb-8 opacity-80 whitespace-pre-wrap">{t.categories.cat1Desc}</p>
                         <div className="mt-auto border-t border-accent/20 pt-6">
                             <button onClick={toggleRequirements} className="w-full flex justify-between items-center text-xs font-bold tracking-widest hover:text-accent transition-colors">
                                 <span>{isOpen ? t.categories.closeRequirements : t.categories.viewRequirements}</span>
@@ -387,7 +381,7 @@ export const Categories: React.FC = () => {
                         </div>
                         <h3 className="text-2xl md:text-4xl font-bold mb-2">{t.categories.cat2Title}</h3>
                         <p className="text-sm text-accent tracking-widest mb-6">{t.categories.cat2Subtitle}</p>
-                        <p className="text-base leading-loose mb-8 opacity-80">{t.categories.cat2Desc}</p>
+                        <p className="text-base leading-loose mb-8 opacity-80 whitespace-pre-wrap">{t.categories.cat2Desc}</p>
                         <div className="mt-auto border-t border-accent/20 pt-6">
                             <button onClick={toggleRequirements} className="w-full flex justify-between items-center text-xs font-bold tracking-widest hover:text-accent transition-colors">
                                 <span>{isOpen ? t.categories.closeRequirements : t.categories.viewRequirements}</span>
@@ -438,35 +432,44 @@ export const Prizes: React.FC = () => {
     return (
         <section id="prizes" className="py-24 px-6">
             <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-3xl md:text-5xl mb-12 reveal-text tracking-widest">{t.prizes.title}</h2>
+                <h2 className="text-3xl md:text-5xl mb-12 reveal-text tracking-widest uppercase">{t.prizes.title}</h2>
                 <div className="mb-16 reveal-text flex items-center justify-center gap-4 md:gap-12">
                     <h3 className="text-4xl md:text-6xl font-black text-accent tracking-tighter">{t.prizes.totalPrize}</h3>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                    <div className="bg-white/50 p-10 border-2 border-accent shadow-xl reveal-text relative overflow-hidden backdrop-blur-md rounded-xl">
-                        <div className="absolute top-0 right-0 bg-accent text-white text-xs px-4 py-1 font-bold rounded-bl-lg">No.1</div>
-                        <div className="text-5xl mb-6 text-accent"><i className="fas fa-trophy"></i></div>
-                        <h3 className="text-2xl font-bold mb-2">{t.prizes.grandPrizeTitle}</h3>
-                        <p className="text-3xl font-black mb-2">{t.prizes.grandPrizeAmount}</p>
-                        <p className="text-xs opacity-60 mb-4">{t.prizes.grandPrizeNote}</p>
-                        <div className="border-t border-accent/20 pt-4 mt-4"><p className="font-bold text-accent">{t.prizes.grandPrizeExtra}</p></div>
-                    </div>
-                    <div className="bg-white/40 p-10 border border-white/40 shadow-lg reveal-text flex flex-col justify-center backdrop-blur-md rounded-xl">
-                        <div className="text-4xl mb-6 text-accent/80"><i className="fas fa-medal"></i></div>
-                        <h3 className="text-xl font-bold mb-2">{t.prizes.excellencePrizeTitle}</h3>
-                        <p className="text-2xl font-black mb-2">{t.prizes.excellencePrizeAmount}</p>
-                        <p className="text-xs opacity-60">{t.prizes.excellencePrizeNote}</p>
+                
+                <div className="mb-12 text-left">
+                    <h4 className="text-xl font-bold mb-6 border-l-4 border-accent pl-4">{t.prizes.shortTitle}</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="bg-white/50 p-6 border border-accent rounded-xl backdrop-blur-md">
+                            <span className="text-xs font-bold text-accent block mb-2">{t.prizes.grandPrize}</span>
+                            <p className="text-2xl font-black">{t.prizes.shortGrand}</p>
+                        </div>
+                        <div className="bg-white/30 p-6 border border-white/40 rounded-xl backdrop-blur-md">
+                            <span className="text-xs font-bold opacity-60 block mb-2">{t.prizes.excellencePrize}</span>
+                            <p className="text-2xl font-black">{t.prizes.shortEx}</p>
+                        </div>
+                        <div className="bg-white/30 p-6 border border-white/40 rounded-xl backdrop-blur-md">
+                            <span className="text-xs font-bold opacity-60 block mb-2">{t.prizes.judgesPrize}</span>
+                            <p className="text-2xl font-black">{t.prizes.shortJudge}</p>
+                        </div>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 reveal-text">
-                    <div className="bg-white/30 p-8 border border-white/40 backdrop-blur-sm rounded-lg">
-                        <h3 className="font-bold mb-2 text-lg">{t.prizes.judgesPrizeTitle}</h3>
-                        <p className="text-xl font-bold mb-2">{t.prizes.judgesPrizeAmount}</p>
-                        <p className="text-sm opacity-70">{t.prizes.judgesPrizeDesc}</p>
-                    </div>
-                    <div className="bg-white/30 p-8 border border-white/40 backdrop-blur-sm rounded-lg">
-                        <h3 className="font-bold mb-2 text-lg">{t.prizes.nomineePrizeTitle}</h3>
-                        <p className="text-xl font-bold">{t.prizes.nomineePrizeAmount}</p>
+
+                <div className="text-left">
+                    <h4 className="text-xl font-bold mb-6 border-l-4 border-accent pl-4">{t.prizes.tenTitle}</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="bg-white/50 p-6 border border-accent rounded-xl backdrop-blur-md">
+                            <span className="text-xs font-bold text-accent block mb-2">{t.prizes.grandPrize}</span>
+                            <p className="text-2xl font-black">{t.prizes.tenGrand}</p>
+                        </div>
+                        <div className="bg-white/30 p-6 border border-white/40 rounded-xl backdrop-blur-md">
+                            <span className="text-xs font-bold opacity-60 block mb-2">{t.prizes.excellencePrize}</span>
+                            <p className="text-2xl font-black">{t.prizes.tenEx}</p>
+                        </div>
+                        <div className="bg-white/30 p-6 border border-white/40 rounded-xl backdrop-blur-md">
+                            <span className="text-xs font-bold opacity-60 block mb-2">{t.prizes.judgesPrize}</span>
+                            <p className="text-2xl font-black">{t.prizes.tenJudge}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -476,17 +479,25 @@ export const Prizes: React.FC = () => {
 
 export const Partners: React.FC = () => {
     const { t } = useLanguage();
+    const sponsors = [
+        { name: "ElevenLabs", logo: "images/contents/logo_1_11.svg", url: "https://elevenlabs.io/ja" },
+        { name: "Way to AGI", logo: "images/contents/logo_2_way.svg", url: "https://www.waytoagi.com/ja" },
+        { name: "ONOMA.AI", logo: "images/contents/logo_3_onoma.webp", url: "https://www.onomaai.com/" },
+        { name: "日本工学院", logo: "images/contents/logo_4_nk.svg", url: "https://www.neec.ac.jp/" },
+        { name: "AIHUB", logo: "images/contents/logo_5_ai.svg", url: "https://aihub.co.jp/" },
+        { name: "AICOMMU", logo: "images/contents/logo_6_aic.svg", url: "https://aihub.co.jp/" }
+    ];
+
     return (
         <section id="partners" className="py-24 px-6">
             <div className="max-w-6xl mx-auto text-center">
                 <h2 className="text-sm tracking-[0.3em] mb-16 text-accent uppercase font-black">{t.partners.title}</h2>
-                <div className="flex flex-wrap justify-center gap-10 md:gap-20 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-                    <img src="images/contents/logo_1_11.svg" className="h-12 md:h-16" alt="Partner 1" />
-                    <img src="images/contents/logo_2_way.svg" className="h-12 md:h-16" alt="Partner 2" />
-                    <img src="images/contents/logo_3_onoma.webp" className="h-12 md:h-16" alt="Partner 3" />
-                    <img src="images/contents/logo_4_nk.svg" className="h-12 md:h-16" alt="Partner 4" />
-                    <img src="images/contents/logo5_aihub.webp" className="h-12 md:h-16" alt="AiHUB" />
-                    <img src="images/contents/logo6_ai.webp" className="h-12 md:h-16" alt="AI" />
+                <div className="flex flex-wrap justify-center gap-10 md:gap-20 opacity-70 grayscale hover:grayscale-0 transition-all duration-500 mb-16">
+                    {sponsors.map((s, i) => (
+                        <a key={i} href={s.url} target="_blank" rel="noopener noreferrer" className="h-12 md:h-16 flex items-center">
+                            <img src={s.logo} className="h-full" alt={s.name} />
+                        </a>
+                    ))}
                 </div>
             </div>
         </section>
@@ -495,7 +506,7 @@ export const Partners: React.FC = () => {
 
 export const CallToAction: React.FC = () => {
     const { t } = useLanguage();
-    const submitLink = "https://www.creators-wonderland.com";
+    const submitLink = "https://www.creators-wonderland.com/ja/contests/kuriemi-contest001";
 
     return (
         <section id="cta" className="py-24 px-6 bg-accent/5">
@@ -517,8 +528,8 @@ export const EntryProcess: React.FC = () => {
     return (
         <section id="howto" className="py-24 px-6">
             <div className="max-w-5xl mx-auto">
-                <h2 className="text-3xl md:text-5xl mb-20 text-center reveal-text">{t.entry.title}</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24 reveal-text">
+                <h2 className="text-3xl md:text-5xl mb-20 text-center reveal-text uppercase">{t.entry.title}</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 reveal-text">
                     {[
                         { num: "01", title: t.entry.step1Title, desc: t.entry.step1Desc },
                         { num: "02", title: t.entry.step2Title, desc: t.entry.step2Desc },
@@ -531,6 +542,11 @@ export const EntryProcess: React.FC = () => {
                             <p className="text-sm opacity-80 leading-relaxed whitespace-pre-wrap">{step.desc}</p>
                         </div>
                     ))}
+                </div>
+                <div className="bg-black/5 p-6 md:p-8 rounded-lg reveal-text">
+                    <ul className="text-[10px] md:text-xs space-y-3 opacity-60 leading-relaxed list-none">
+                        {t.entry.notes.map((note, i) => <li key={i}>• {note}</li>)}
+                    </ul>
                 </div>
             </div>
         </section>
@@ -576,7 +592,7 @@ export const FAQ: React.FC = () => {
     return (
         <section id="faq" className="py-24 px-6">
             <div className="max-w-4xl mx-auto">
-                <h2 className="text-3xl md:text-5xl mb-16 text-center reveal-text">{t.faq.title}</h2>
+                <h2 className="text-3xl md:text-5xl mb-16 text-center reveal-text uppercase">{t.faq.title}</h2>
                 <div className="space-y-12">
                     {t.faq.categories.map((cat, i) => (
                         <div key={i}>
@@ -618,17 +634,7 @@ export const Footer: React.FC<FooterProps> = ({ onTermsClick, onPrivacyClick, on
 
     return (
         <footer className="pt-24 pb-12 px-6 border-t border-accent text-xs bg-white/10 backdrop-blur-md">
-            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 mb-20">
-                <div>
-                    <h4 className="font-bold mb-6 tracking-widest">{t.footer.warningsTitle}</h4>
-                    <ul className="space-y-3 opacity-70 leading-relaxed list-none">{t.footer.warnings.map((w, i) => <li key={i}>{w}</li>)}</ul>
-                </div>
-                <div>
-                    <h4 className="font-bold mb-6 tracking-widest">{t.footer.rightsTitle}</h4>
-                    <ul className="space-y-3 opacity-70 leading-relaxed list-none">{t.footer.rights.map((r, i) => <li key={i}>{r}</li>)}</ul>
-                </div>
-            </div>
-            <div className="max-w-6xl mx-auto text-center border-t border-accent/30 pt-12">
+            <div className="max-w-6xl mx-auto text-center">
                 <div className="flex flex-wrap justify-center gap-8 mb-8 font-medium opacity-80">
                     <a href="#" onClick={handleTerms} className="hover:text-accent transition-colors">{t.footer.links.terms}</a>
                     <a href="#" onClick={handlePrivacy} className="hover:text-accent transition-colors">{t.footer.links.privacy}</a>
