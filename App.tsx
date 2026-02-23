@@ -35,12 +35,12 @@ const AppContent: React.FC = () => {
   const { t } = useLanguage();
 
   const partnerLogos = [
-    'images/contents/logo_1_11.svg',
-    'images/contents/logo_2_way.svg',
-    'images/contents/logo_3_onoma.webp',
-    'images/contents/logo_4_nk.svg',
-    'images/contents/logo5_aihub.webp',
-    'images/contents/logo6_ai.webp'
+    '/images/contents/logo_1_11.svg',
+    '/images/contents/logo_2_way.svg',
+    '/images/contents/logo_3_onoma.webp',
+    '/images/contents/logo_4_nk.svg',
+    '/images/contents/logo_5_ai.svg',
+    '/images/contents/logo_6_aic.svg'
 
   ];
 
